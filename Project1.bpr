@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.05.03"/>
+    <PROJECT value="&quot;C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester\Project1.exe&quot;"/>
+    <OBJFILES value="Project1.obj MainForm.obj"/>
+    <RESFILES value="Project1.res"/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) MainForm.dfm"/>
+    <LIBFILES value="mbn.lib"/>
+    <LIBRARIES value="VCLX50.lib bcbsmp50.lib SlySound.lib HNPsSDKC5.lib dnr.lib Vcl50.lib"/>
+    <SPARELIBS value="Vcl50.lib dnr.lib HNPsSDKC5.lib SlySound.lib bcbsmp50.lib VCLX50.lib"/>
+    <PACKAGES value="Vcl50.bpi Vclx50.bpi bcbsmp50.bpi Qrpt50.bpi Vcldb50.bpi Vclbde50.bpi 
+      ibsmp50.bpi vcldbx50.bpi TeeUI50.bpi TeeDB50.bpi Tee50.bpi TeeQR50.bpi 
+      VCLIB50.bpi bcbie50.bpi vclie50.bpi Inetdb50.bpi Inet50.bpi NMFast50.bpi 
+      dclocx50.bpi bcb2kaxserver50.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="tlink32"/>
+    <USERDEFINES value="_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT"/>
+    <MAINSOURCE value="Project1.cpp"/>
+    <INCLUDEPATH value="..\..;C:\PSSDK_VCL\BCB5\;&quot;..\..\DNR VCL Components&quot;;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;&quot;..\..\DNR VCL Components\SerialPortEnviroment&quot;"/>
+    <LIBPATH value="..\..;C:\PSSDK_VCL\BCB5\;&quot;..\..\DNR VCL Components&quot;;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\..\..\source;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <WARNINGS value="-w-par"/>
+  </MACROS>
+  <OPTIONS>
+    <CFLAG1 value="-vGc -vGt -vGd -Od -H=$(BCB)\lib\vcl50.csm -Hc -Q -Vx -Ve -X- -r- -a8 -b- 
+      -k -y -v -vi- -c -tW -tWM"/>
+    <PFLAGS value="-$Y+ -$W -$O- -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn -v"/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="cg32.lib $(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
+  </LINKER>
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1043
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=11
+Item0=..\..;C:\PSSDK_VCL\BCB5\;..\..\DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;..\..\DNR VCL Components\SerialPortEnviroment
+Item1=..;..\..\..\..\PSSDK_VCL\BCB5;..\DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;..\DNR VCL Components\SerialPortEnviroment
+Item2=..\;..\..\..\..\PSSDK_VCL\BCB5;..\DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;..\DNR VCL Components\SerialPortEnviroment
+Item3=..\..\..\PSSDK_VCL\BCB5;DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;DNR VCL Components\SerialPortEnviroment
+Item4=..\..\..\PSSDK_VCL\BCB5;DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;C:\Program Files\Borland\CBuilder5\Projects\DNR VCL Components\SerialPortEnviroment
+Item5=..\..\..\PSSDK_VCL\BCB5;DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl
+Item6=DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl
+Item7=DNR VCL Components;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;C:\rtaudio\
+Item8=DNR VCL Components;C:\Abakus\CB5;$(BCB)\projects\dnr vcl components;$(BCB)\include;$(BCB)\include\vcl;C:\rtaudio
+Item9=DNR VCL Components;C:\Abakus\CB5;$(BCB)\projects\dnr vcl components;$(BCB)\include;$(BCB)\include\vcl
+Item10=$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=9
+Item0=..\..;C:\PSSDK_VCL\BCB5\;..\..\DNR VCL Components;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\..\..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item1=..;..\..\..\..\PSSDK_VCL\BCB5;..\DNR VCL Components;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item2=..\;..\..\..\..\PSSDK_VCL\BCB5;..\DNR VCL Components;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item3=..\..\..\PSSDK_VCL\BCB5;DNR VCL Components;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item4=DNR VCL Components;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item5=DNR VCL Components;C:\DOCUME~1\Eigenaar\BUREAU~1\JVCL32~1\jcl\lib\c5\;$(BCB)\Projects\Lib;C:\Abakus\CB5\;..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item6=DNR VCL Components;C:\DOCUME~1\Eigenaar\BUREAU~1\JVCL32~1\jcl\lib\c5;$(BCB)\Projects\Lib;C:\Abakus\CB5;$(BCB)\projects\dnr vcl components;..\source;$(BCB)\lib\obj;$(BCB)\lib
+Item7=C:\tporpheus_406\source;$(BCB)\lib\obj;$(BCB)\lib
+Item8=$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=1
+Item0=_DEBUG
+
+[HistoryLists\hlFinalOutputDir]
+Count=3
+Item0=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester
+Item1=C:\Program Files\Borland\CBuilder5\Projects\release\
+Item2=C:\Program Files\Borland\CBuilder5\Projects\release
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=1
+LinkDebugVcl=0
+LinkCGLIB=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+  </IDEOPTIONS>
+</PROJECT>
