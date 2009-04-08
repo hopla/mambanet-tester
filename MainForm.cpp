@@ -30,7 +30,7 @@ TCriticalSection *lck;
 
 struct mbn_node_info thisnode = {
   0, 0,
-  "MambaNet Node Tester", "Hobbygeval",
+  "MambaNet Node Tester", "D&R Tester",
   1, 24, 0,
 };
 

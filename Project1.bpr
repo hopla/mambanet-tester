@@ -22,7 +22,7 @@
     <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="tlink32"/>
-    <USERDEFINES value="_DEBUG"/>
+    <USERDEFINES value=""/>
     <SYSDEFINES value="NO_STRICT"/>
     <MAINSOURCE value="Project1.cpp"/>
     <INCLUDEPATH value="..\..;C:\PSSDK_VCL\BCB5\;&quot;..\..\DNR VCL Components&quot;;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;&quot;..\..\DNR VCL Components\SerialPortEnviroment&quot;"/>
@@ -30,17 +30,16 @@
     <WARNINGS value="-w-par"/>
   </MACROS>
   <OPTIONS>
-    <CFLAG1 value="-vGc -vGt -vGd -Od -H=$(BCB)\lib\vcl50.csm -Hc -Q -Vx -Ve -X- -r- -a8 -b- 
-      -k -y -v -vi- -c -tW -tWM"/>
-    <PFLAGS value="-$Y+ -$W -$O- -v -JPHNE -M"/>
+    <CFLAG1 value="-O2 -H=$(BCB)\lib\vcl50.csm -Hc -Q -Vx -Ve -X- -a8 -b- -k- -vi -c -tW -tWM"/>
+    <PFLAGS value="-$Y- -$L- -$D- -v -JPHNE -M"/>
     <RFLAGS value=""/>
-    <AFLAGS value="/mx /w2 /zi"/>
-    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn -v"/>
+    <AFLAGS value="/mx /w2 /zn"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn"/>
   </OPTIONS>
   <LINKER>
     <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
     <ALLRES value="$(RESFILES)"/>
-    <ALLLIB value="cg32.lib $(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
   </LINKER>
   <IDEOPTIONS>
 [Version Info]
@@ -105,10 +104,11 @@ Count=1
 Item0=_DEBUG
 
 [HistoryLists\hlFinalOutputDir]
-Count=3
-Item0=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester
-Item1=C:\Program Files\Borland\CBuilder5\Projects\release\
-Item2=C:\Program Files\Borland\CBuilder5\Projects\release
+Count=4
+Item0=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester\
+Item1=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester
+Item2=C:\Program Files\Borland\CBuilder5\Projects\release\
+Item3=C:\Program Files\Borland\CBuilder5\Projects\release
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl
@@ -123,7 +123,7 @@ RemoteDebug=0
 [Compiler]
 ShowInfoMsgs=1
 LinkDebugVcl=0
-LinkCGLIB=1
+LinkCGLIB=0
 
 [Language]
 ActiveLang=
