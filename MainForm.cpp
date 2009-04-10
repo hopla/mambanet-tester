@@ -798,3 +798,10 @@ void __fastcall TMain::cseUniqueIDChange(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TMain::RefreshTimerTimer(TObject *Sender)
+{
+    if(cbObjRefresh->Checked && lvObjects->SelCount >= 0 && pcTabs->ActivePageIndex == 1)
+        lvObjectsSelectItem(Sender, lvObjects->Selected, true);
+}
+//---------------------------------------------------------------------------
+

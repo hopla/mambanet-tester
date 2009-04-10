@@ -1,6 +1,6 @@
 object Main: TMain
   Left = 355
-  Top = 272
+  Top = 239
   BorderStyle = bsSingle
   Caption = 'MambaNet Tester'
   ClientHeight = 526
@@ -102,7 +102,7 @@ object Main: TMain
     Top = 75
     Width = 511
     Height = 431
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     TabOrder = 1
     object TabSheet3: TTabSheet
       Caption = 'Node list'
@@ -378,28 +378,28 @@ object Main: TMain
       end
       object Label18: TLabel
         Left = 10
-        Top = 365
+        Top = 360
         Width = 36
         Height = 13
         Caption = 'Sensor:'
       end
       object Label20: TLabel
         Left = 240
-        Top = 365
+        Top = 360
         Width = 43
         Height = 13
         Caption = 'Actuator:'
       end
       object lblObjSensor: TLabel
         Left = 70
-        Top = 365
+        Top = 360
         Width = 3
         Height = 13
         Caption = '-'
       end
       object lblObjActuator: TLabel
         Left = 290
-        Top = 365
+        Top = 360
         Width = 3
         Height = 13
         Caption = '-'
@@ -452,7 +452,7 @@ object Main: TMain
         Left = 5
         Top = 60
         Width = 491
-        Height = 301
+        Height = 296
         Columns = <
           item
             Caption = 'Nr.'
@@ -541,6 +541,14 @@ object Main: TMain
         TabOrder = 5
         OnClick = btnObjRetryClick
       end
+      object cbObjRefresh: TCheckBox
+        Left = 420
+        Top = 360
+        Width = 81
+        Height = 16
+        Caption = 'Auto-refresh'
+        TabOrder = 6
+      end
     end
     object TabSheet1: TTabSheet
       Caption = 'Log'
@@ -627,5 +635,10 @@ object Main: TMain
         Width = 100
       end>
     SimplePanel = False
+  end
+  object RefreshTimer: TTimer
+    OnTimer = RefreshTimerTimer
+    Left = 495
+    Top = 5
   end
 end

@@ -85,6 +85,8 @@ __published:	// IDE-managed Components
   TButton *btnObjStrAct;
   TLabel *lblObjStatus;
   TButton *btnObjRetry;
+  TCheckBox *cbObjRefresh;
+  TTimer *RefreshTimer;
   void __fastcall FormCreate(TObject *Sender);
   void __fastcall btnOpenClick(TObject *Sender);
   void __fastcall btnCloseClick(TObject *Sender);
@@ -101,6 +103,7 @@ __published:	// IDE-managed Components
   void __fastcall btnObjStrActClick(TObject *Sender);
   void __fastcall btnObjRetryClick(TObject *Sender);
   void __fastcall cseUniqueIDChange(TObject *Sender);
+  void __fastcall RefreshTimerTimer(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
   struct mbn_handler *mbn;
