@@ -1,10 +1,9 @@
 object Main: TMain
-  Left = 472
-  Top = 214
-  BorderStyle = bsSingle
+  Left = 286
+  Top = 183
+  Width = 532
+  Height = 553
   Caption = 'MambaNet Tester'
-  ClientHeight = 526
-  ClientWidth = 524
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -102,6 +101,7 @@ object Main: TMain
     Width = 511
     Height = 431
     ActivePage = TabSheet3
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
     object TabSheet3: TTabSheet
       Caption = 'Node list'
@@ -111,6 +111,7 @@ object Main: TMain
         Top = 385
         Width = 161
         Height = 16
+        Anchors = [akLeft, akBottom]
         Caption = 'Fetch additional information'
         TabOrder = 0
         OnClick = cbListFetchClick
@@ -120,6 +121,7 @@ object Main: TMain
         Top = 382
         Width = 71
         Height = 21
+        Anchors = [akRight, akBottom]
         Caption = 'Ping all'
         TabOrder = 1
         OnClick = mbnPingAllClick
@@ -129,6 +131,7 @@ object Main: TMain
         Top = 5
         Width = 491
         Height = 376
+        Anchors = [akLeft, akTop, akRight, akBottom]
         Columns = <
           item
             Caption = 'Address'
@@ -380,6 +383,7 @@ object Main: TMain
         Top = 360
         Width = 36
         Height = 13
+        Anchors = [akLeft, akBottom]
         Caption = 'Sensor:'
       end
       object Label20: TLabel
@@ -387,6 +391,7 @@ object Main: TMain
         Top = 360
         Width = 43
         Height = 13
+        Anchors = [akRight, akBottom]
         Caption = 'Actuator:'
       end
       object lblObjSensor: TLabel
@@ -394,6 +399,7 @@ object Main: TMain
         Top = 360
         Width = 3
         Height = 13
+        Anchors = [akLeft, akBottom]
         Caption = '-'
       end
       object lblObjActuator: TLabel
@@ -401,6 +407,7 @@ object Main: TMain
         Top = 360
         Width = 3
         Height = 13
+        Anchors = [akRight, akBottom]
         Caption = '-'
       end
       object Label21: TLabel
@@ -408,6 +415,7 @@ object Main: TMain
         Top = 385
         Width = 53
         Height = 13
+        Anchors = [akLeft, akBottom]
         Caption = 'Frequency:'
       end
       object lblNodeID: TLabel
@@ -430,6 +438,7 @@ object Main: TMain
         Width = 3
         Height = 13
         Alignment = taRightJustify
+        Anchors = [akRight, akBottom]
         Caption = '-'
       end
       object lblObjNumActMax: TLabel
@@ -437,6 +446,7 @@ object Main: TMain
         Top = 380
         Width = 3
         Height = 13
+        Anchors = [akRight, akBottom]
         Caption = '-'
       end
       object lblObjStatus: TLabel
@@ -445,6 +455,7 @@ object Main: TMain
         Width = 17
         Height = 13
         Alignment = taRightJustify
+        Anchors = [akRight, akBottom]
         Caption = '0/0'
       end
       object lvObjects: TListView
@@ -452,6 +463,7 @@ object Main: TMain
         Top = 60
         Width = 491
         Height = 296
+        Anchors = [akLeft, akTop, akRight, akBottom]
         Columns = <
           item
             Caption = 'Nr.'
@@ -491,6 +503,7 @@ object Main: TMain
         Width = 91
         Height = 21
         Style = csDropDownList
+        Anchors = [akLeft, akBottom]
         ItemHeight = 13
         TabOrder = 1
         OnChange = cbObjFreqChange
@@ -510,6 +523,7 @@ object Main: TMain
         Top = 380
         Width = 191
         Height = 16
+        Anchors = [akRight, akBottom]
         PageSize = 0
         TabOrder = 2
         OnChange = sbObjNumActChange
@@ -519,6 +533,7 @@ object Main: TMain
         Top = 380
         Width = 186
         Height = 21
+        Anchors = [akRight, akBottom]
         TabOrder = 3
       end
       object btnObjStrAct: TButton
@@ -535,6 +550,7 @@ object Main: TMain
         Top = 380
         Width = 46
         Height = 21
+        Anchors = [akRight, akBottom]
         Caption = 'Retry'
         Enabled = False
         TabOrder = 5
@@ -545,6 +561,7 @@ object Main: TMain
         Top = 360
         Width = 81
         Height = 16
+        Anchors = [akRight, akBottom]
         Caption = 'Auto-refresh'
         TabOrder = 6
       end
@@ -556,6 +573,7 @@ object Main: TMain
         Top = 5
         Width = 491
         Height = 371
+        Anchors = [akLeft, akTop, akRight, akBottom]
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -570,6 +588,7 @@ object Main: TMain
         Top = 380
         Width = 76
         Height = 21
+        Anchors = [akRight, akBottom]
         Caption = 'Clear'
         TabOrder = 1
         OnClick = btnLogClearClick
@@ -580,6 +599,7 @@ object Main: TMain
         Width = 71
         Height = 21
         Hint = 'Callbacks from mbn'
+        Anchors = [akLeft, akBottom]
         Caption = 'Callbacks'
         Checked = True
         ParentShowHint = False
@@ -593,6 +613,7 @@ object Main: TMain
         Width = 61
         Height = 21
         Hint = 'Show raw object messages'
+        Anchors = [akLeft, akBottom]
         Caption = 'Objects'
         ParentShowHint = False
         ShowHint = True
@@ -604,6 +625,7 @@ object Main: TMain
         Width = 76
         Height = 21
         Hint = 'Show raw address messages'
+        Anchors = [akLeft, akBottom]
         Caption = 'Addresses'
         ParentShowHint = False
         ShowHint = True
@@ -615,6 +637,7 @@ object Main: TMain
         Width = 76
         Height = 21
         Hint = 'Application messages'
+        Anchors = [akLeft, akBottom]
         Caption = 'App. msgs'
         Checked = True
         ParentShowHint = False
