@@ -90,7 +90,6 @@ __published:	// IDE-managed Components
   void __fastcall FormCreate(TObject *Sender);
   void __fastcall btnOpenClick(TObject *Sender);
   void __fastcall btnCloseClick(TObject *Sender);
-  void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
   void __fastcall mbnPingAllClick(TObject *Sender);
   void __fastcall btnLogClearClick(TObject *Sender);
   void __fastcall cbListFetchClick(TObject *Sender);
@@ -111,6 +110,7 @@ public:		// User declarations
   char validaddr;
   unsigned long fromaddr, objnr, objcount, objget;
   __fastcall TMain(TComponent* Owner);
+  __fastcall ~TMain();
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TMain *Main;

@@ -1,6 +1,6 @@
 object Main: TMain
-  Left = 355
-  Top = 239
+  Left = 472
+  Top = 214
   BorderStyle = bsSingle
   Caption = 'MambaNet Tester'
   ClientHeight = 526
@@ -12,7 +12,6 @@ object Main: TMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13

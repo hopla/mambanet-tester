@@ -374,6 +374,16 @@ __fastcall TMain::TMain(TComponent* Owner)
      lck = new TCriticalSection();
 }
 
+__fastcall TMain::~TMain()
+{
+    if(iflist)
+        mbnEthernetIFFree(iflist);
+    if(mbn)
+        mbnFree(mbn);
+    mbn = NULL;
+    //delete lck;
+}
+
 
 //---------------------------------------------------------------------------
 void __fastcall TMain::FormCreate(TObject *Sender)
@@ -475,16 +485,6 @@ void __fastcall TMain::btnCloseClick(TObject *Sender) {
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMain::FormClose(TObject *Sender, TCloseAction &Action) {
-    lck->Enter();
-    if(iflist)
-        mbnEthernetIFFree(iflist);
-    if(mbn)
-        mbnFree(mbn);
-    lck->Leave();
-    delete lck;
-}
-//---------------------------------------------------------------------------
 
 
 void __fastcall TMain::mbnPingAllClick(TObject *Sender) {
@@ -800,7 +800,7 @@ void __fastcall TMain::cseUniqueIDChange(TObject *Sender)
 
 void __fastcall TMain::RefreshTimerTimer(TObject *Sender)
 {
-    if(cbObjRefresh->Checked && lvObjects->SelCount >= 0 && pcTabs->ActivePageIndex == 1)
+    if(mbn && cbObjRefresh->Checked && lvObjects->SelCount >= 0 && pcTabs->ActivePageIndex == 1)
         lvObjectsSelectItem(Sender, lvObjects->Selected, true);
 }
 //---------------------------------------------------------------------------
