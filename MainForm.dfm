@@ -1,6 +1,6 @@
 object Main: TMain
-  Left = 286
-  Top = 183
+  Left = 333
+  Top = 256
   Width = 532
   Height = 553
   Caption = 'MambaNet Tester'

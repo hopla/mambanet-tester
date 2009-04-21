@@ -321,7 +321,7 @@ int mObjectInformationResponse(struct mbn_handler *mbn, struct mbn_message *msg,
       it->SubItems->Add(tmp);
       sprintf(tmp, "%.0f %.0f",
         NUMTYPE(nfo->SensorType, nfo->SensorMin),
-        NUMTYPE(nfo->ActuatorType, nfo->ActuatorMin));
+        NUMTYPE(nfo->SensorType, nfo->SensorMax));
       it->SubItems->Add(tmp);
     } else {
       it->SubItems->Add("-");
