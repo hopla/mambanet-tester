@@ -529,7 +529,7 @@ object Main: TMain
         OnChange = sbObjNumActChange
       end
       object txtObjStrAct: TEdit
-        Left = 255
+        Left = 260
         Top = 380
         Width = 186
         Height = 21
@@ -541,6 +541,7 @@ object Main: TMain
         Top = 380
         Width = 46
         Height = 21
+        Anchors = [akRight, akBottom]
         Caption = 'Set'
         TabOrder = 4
         OnClick = btnObjStrActClick

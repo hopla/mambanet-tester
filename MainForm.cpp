@@ -12,7 +12,7 @@
 #include "MainForm.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "CSPIN"
+//#pragma link "CSPIN"
 #pragma resource "*.dfm"
 
 #define LF_APP 1
