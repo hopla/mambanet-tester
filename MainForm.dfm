@@ -153,6 +153,7 @@ object Main: TMain
           end>
         ColumnClick = False
         GridLines = True
+        HideSelection = False
         ReadOnly = True
         RowSelect = True
         SortType = stText
@@ -488,6 +489,7 @@ object Main: TMain
           end>
         ColumnClick = False
         GridLines = True
+        HideSelection = False
         MultiSelect = True
         ReadOnly = True
         RowSelect = True
