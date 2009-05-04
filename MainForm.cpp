@@ -24,6 +24,7 @@
   (type) == MBN_DATATYPE_FLOAT ? (dat).Float :\
   (type) == MBN_DATATYPE_SINT  ? (float)(dat).SInt :\
   (type) == MBN_DATATYPE_UINT || (type) == MBN_DATATYPE_STATE ? (float)(dat).UInt : MINFLOAT)
+#define MMTYPE(t) (t == MBN_DATATYPE_OCTETS || t == MBN_DATATYPE_BITS ? MBN_DATATYPE_UINT : t)
 
 TMain *Main;
 TCriticalSection *lck;
@@ -320,8 +321,8 @@ int mObjectInformationResponse(struct mbn_handler *mbn, struct mbn_message *msg,
       sprintf(tmp, "%d %s", nfo->SensorSize, type2str(nfo->SensorType));
       it->SubItems->Add(tmp);
       sprintf(tmp, "%.0f %.0f",
-        NUMTYPE(nfo->SensorType, nfo->SensorMin),
-        NUMTYPE(nfo->SensorType, nfo->SensorMax));
+        NUMTYPE(MMTYPE(nfo->SensorType), nfo->SensorMin),
+        NUMTYPE(MMTYPE(nfo->SensorType), nfo->SensorMax));
       it->SubItems->Add(tmp);
     } else {
       it->SubItems->Add("-");
@@ -332,9 +333,9 @@ int mObjectInformationResponse(struct mbn_handler *mbn, struct mbn_message *msg,
       sprintf(tmp, "%d %s", nfo->ActuatorSize, type2str(nfo->ActuatorType));
       it->SubItems->Add(tmp);
       sprintf(tmp, "%.0f %.0f %.0f",
-        NUMTYPE(nfo->ActuatorType, nfo->ActuatorMin),
-        NUMTYPE(nfo->ActuatorType, nfo->ActuatorMax),
-        NUMTYPE(nfo->ActuatorType, nfo->ActuatorDefault));
+        NUMTYPE(MMTYPE(nfo->ActuatorType), nfo->ActuatorMin),
+        NUMTYPE(MMTYPE(nfo->ActuatorType), nfo->ActuatorMax),
+        NUMTYPE(MMTYPE(nfo->ActuatorType), nfo->ActuatorDefault));
       it->SubItems->Add(tmp);
     } else {
       it->SubItems->Add("-");
@@ -411,9 +412,9 @@ void __fastcall TMain::FormCreate(TObject *Sender)
     lvObjects->Columns->Items[0]->Width = 40;   
     lvObjects->Columns->Items[1]->Width = 25;
     lvObjects->Columns->Items[2]->Width = 130;
-    lvObjects->Columns->Items[3]->Width = 55;
+    lvObjects->Columns->Items[3]->Width = 60;
     lvObjects->Columns->Items[4]->Width = 65;
-    lvObjects->Columns->Items[5]->Width = 55;
+    lvObjects->Columns->Items[5]->Width = 60;
     lvObjects->Columns->Items[6]->Width = 90;  
     lvObjects->Selected = NULL;
 
@@ -421,7 +422,7 @@ void __fastcall TMain::FormCreate(TObject *Sender)
     lvNodeList->Columns->Items[1]->Width = 95;
     lvNodeList->Columns->Items[2]->Width = 60;
     lvNodeList->Columns->Items[3]->Width = 25;
-    lvNodeList->Columns->Items[4]->Width = 95; 
+    lvNodeList->Columns->Items[4]->Width = 95;
     lvNodeList->Columns->Items[5]->Width = 130;   
     lvNodeList->Selected = NULL;
       
@@ -630,14 +631,14 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
     }
 
     /* make sure all selected actuators are of the same type */
-    min = NUMTYPE(nfo->ActuatorType, nfo->ActuatorMin);
-    max = NUMTYPE(nfo->ActuatorType, nfo->ActuatorMax);
+    min = NUMTYPE(MMTYPE(nfo->ActuatorType), nfo->ActuatorMin);
+    max = NUMTYPE(MMTYPE(nfo->ActuatorType), nfo->ActuatorMax);
     if(nfo->ActuatorType != MBN_DATATYPE_NODATA) {
         for(l=lvObjects->Selected; l!=NULL; l=lvObjects->GetNextItem(l, sdAll, sel)) {
             o = (struct mbn_object *)l->Data;
             if(o->ActuatorType != nfo->ActuatorType
-             || (int)(NUMTYPE(o->ActuatorType, o->ActuatorMax)*100) != (int)(max*100)
-             || (int)(NUMTYPE(o->ActuatorType, o->ActuatorMin)*100) != (int)(min*100)) {
+             || (int)(NUMTYPE(MMTYPE(o->ActuatorType), o->ActuatorMax)*100) != (int)(max*100)
+             || (int)(NUMTYPE(MMTYPE(o->ActuatorType), o->ActuatorMin)*100) != (int)(min*100)) {
                 same = 0;
                 break;
             }
