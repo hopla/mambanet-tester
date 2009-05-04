@@ -62,7 +62,7 @@ char *data2str(unsigned char type, union mbn_data dat) {
     char *d = data2strdat;
     switch(type) {
     case MBN_DATATYPE_NODATA: sprintf(d, "[no data]"); break;
-    case MBN_DATATYPE_UINT:   sprintf(d, "%ld", dat.UInt); break;
+    case MBN_DATATYPE_UINT:   sprintf(d, "%lu", dat.UInt); break;
     case MBN_DATATYPE_SINT:   sprintf(d, "%ld", dat.SInt); break;
     case MBN_DATATYPE_STATE:  sprintf(d, "0x%08lX", dat.State); break;
     case MBN_DATATYPE_OCTETS: sprintf(d, "\"%s\"", dat.Octets); break;
