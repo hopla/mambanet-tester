@@ -174,13 +174,7 @@ int mActuatorDataResponse(struct mbn_handler *mbn, struct mbn_message *msg, unsi
     default:
         if(object == Main->objnr) {
             Main->lblObjActuator->Caption = data2str(type, dat);
-            if(NUMTYPE(type, dat) != MINFLOAT) {
-                t = Main->sbObjNumAct->Visible;
-                Main->sbObjNumAct->Visible = false;
-                Main->sbObjNumAct->Position = type != MBN_DATATYPE_FLOAT ? NUMTYPE(type, dat) : NUMTYPE(type, dat)*100;
-                Main->sbObjNumAct->Visible = t;
-            } else
-                Main->txtObjStrAct->Text = (char *)dat.Octets;
+            Main->txtObjStrAct->Text = data2str(type, dat);
         } else
             r = 1;
     }
@@ -427,9 +421,6 @@ void __fastcall TMain::FormCreate(TObject *Sender)
     lvNodeList->Selected = NULL;
       
     cbObjFreq->ItemIndex = -1;
-    lblObjNumActMin->Visible = false;
-    lblObjNumActMax->Visible = false;
-    sbObjNumAct->Visible = false;
     btnObjStrAct->Visible = false;
     txtObjStrAct->Visible = false;
 
@@ -594,17 +585,14 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
     TListItem *l;
     struct mbn_object *nfo, *o;
     TItemStates sel = TItemStates() << isSelected;
-    float min, max;
+    double min, max;
     char tmp[50];
     int same = 1;
     
     lck->Enter();
     lblObjSensor->Caption = "-";
     lblObjActuator->Caption = "-";
-    cbObjFreq->ItemIndex = 0;
-    lblObjNumActMin->Visible = false;
-    lblObjNumActMax->Visible = false;
-    sbObjNumAct->Visible = false; 
+    cbObjFreq->ItemIndex = 0; 
     btnObjStrAct->Visible = false;
     txtObjStrAct->Visible = false;
     btnObjRetry->Visible = true;
@@ -637,8 +625,8 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
         for(l=lvObjects->Selected; l!=NULL; l=lvObjects->GetNextItem(l, sdAll, sel)) {
             o = (struct mbn_object *)l->Data;
             if(o->ActuatorType != nfo->ActuatorType
-             || (int)(NUMTYPE(MMTYPE(o->ActuatorType), o->ActuatorMax)*100) != (int)(max*100)
-             || (int)(NUMTYPE(MMTYPE(o->ActuatorType), o->ActuatorMin)*100) != (int)(min*100)) {
+             || (__int64)(NUMTYPE(MMTYPE(o->ActuatorType), o->ActuatorMax)*100) != (__int64)(max*100)
+             || (__int64)(NUMTYPE(MMTYPE(o->ActuatorType), o->ActuatorMin)*100) != (__int64)(min*100)) {
                 same = 0;
                 break;
             }
@@ -646,25 +634,9 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
         if(same) {
             btnObjRetry->Visible = false;
             lblObjStatus->Visible = false;
-            if(nfo->ActuatorType != MBN_DATATYPE_OCTETS) {
-                if(nfo->ActuatorType == MBN_DATATYPE_FLOAT) {
-                    min *= 100; max *= 100;
-                }
-                sprintf(tmp, "%.0f", NUMTYPE(nfo->ActuatorType, nfo->ActuatorMin));
-                lblObjNumActMin->Caption = tmp;
-                sprintf(tmp, "%.0f", NUMTYPE(nfo->ActuatorType, nfo->ActuatorMax));
-                lblObjNumActMax->Caption = tmp;
-                sbObjNumAct->Min = min;
-                sbObjNumAct->Max = max;
-                sbObjNumAct->Position = (max+min)/2;
-                lblObjNumActMin->Visible = true;
-                lblObjNumActMax->Visible = true;
-                sbObjNumAct->Visible = true;
-            } else {
-                btnObjStrAct->Visible = true;
-                txtObjStrAct->Text = "";
-                txtObjStrAct->Visible = true;
-            }
+            btnObjStrAct->Visible = true;
+            txtObjStrAct->Text = "";
+            txtObjStrAct->Visible = true;
         }
     }
 
@@ -702,44 +674,6 @@ void __fastcall TMain::lvObjectsDeletion(TObject *Sender, TListItem *Item)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMain::sbObjNumActChange(TObject *Sender)
-{
-    TItemStates sel = TItemStates() << isSelected;
-    TListItem *l;
-    union mbn_data dat;
-    struct mbn_object *nfo;
-    int var;
-
-    lck->Enter();
-    var = sbObjNumAct->Position;
-
-    if(sbObjNumAct->Visible == false) {
-        lck->Leave();
-        return;
-    }
-
-    if(lvObjects->SelCount < 1) {
-        addlog(LF_APP, "Nothing selected!");
-        lck->Leave();
-        return;
-    }
-
-    for(l=lvObjects->Selected; l!=NULL; l=lvObjects->GetNextItem(l, sdAll, sel)) {
-        nfo = (struct mbn_object *)l->Data;
-        switch(nfo->ActuatorType) {
-        case MBN_DATATYPE_UINT:
-        case MBN_DATATYPE_STATE:  dat.UInt = var; break;
-        case MBN_DATATYPE_FLOAT:  dat.Float = ((float)var)/100; break;
-        case MBN_DATATYPE_SINT:   dat.SInt = var; break;
-        }
-        addlog(LF_APP, "Setting actuator data of %08lX object #%d to %s", fromaddr, nfo->timeout, data2str(nfo->ActuatorType, dat));
-        mbnSetActuatorData(mbn, fromaddr, nfo->timeout, nfo->ActuatorType, nfo->ActuatorSize, dat, 1);
-    }
-    lblObjActuator->Caption = data2str(nfo->ActuatorType, dat);
-    lck->Leave();
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TMain::btnObjStrActClick(TObject *Sender)
 {
     TItemStates sel = TItemStates() << isSelected; 
@@ -760,10 +694,19 @@ void __fastcall TMain::btnObjStrActClick(TObject *Sender)
         return;
     }
 
-    strcpy((char *)str, txtObjStrAct->Text.c_str());
-    dat.Octets = (unsigned char *)str;
     for(l=lvObjects->Selected; l!=NULL; l=lvObjects->GetNextItem(l, sdAll, sel)) {
         nfo = (struct mbn_object *)l->Data;
+        switch(nfo->ActuatorType) {
+        case MBN_DATATYPE_UINT:                      /* needs double to parse (1<<31) */
+        case MBN_DATATYPE_STATE:  dat.UInt = (unsigned long) txtObjStrAct->Text.ToDouble(); break;
+        case MBN_DATATYPE_FLOAT:  dat.Float = (float) txtObjStrAct->Text.ToDouble(); break;
+        case MBN_DATATYPE_SINT:   dat.SInt = txtObjStrAct->Text.ToInt(); break;
+        case MBN_DATATYPE_OCTETS:    
+            memset((void *)str, 0, 100);
+            strncpy((char *)str, txtObjStrAct->Text.c_str(), 100);
+            dat.Octets = (unsigned char *)str;
+            break;
+        }
         addlog(LF_APP, "Setting actuator data of %08lX object #%d to %s", fromaddr, nfo->timeout, data2str(nfo->ActuatorType, dat));
         mbnSetActuatorData(mbn, fromaddr, nfo->timeout, nfo->ActuatorType, nfo->ActuatorSize, dat, 1);
     }

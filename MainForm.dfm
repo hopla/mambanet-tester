@@ -433,23 +433,6 @@ object Main: TMain
         Height = 13
         Caption = 'UniqueID:'
       end
-      object lblObjNumActMin: TLabel
-        Left = 263
-        Top = 380
-        Width = 3
-        Height = 13
-        Alignment = taRightJustify
-        Anchors = [akRight, akBottom]
-        Caption = '-'
-      end
-      object lblObjNumActMax: TLabel
-        Left = 465
-        Top = 380
-        Width = 3
-        Height = 13
-        Anchors = [akRight, akBottom]
-        Caption = '-'
-      end
       object lblObjStatus: TLabel
         Left = 425
         Top = 385
@@ -520,43 +503,33 @@ object Main: TMain
           '0.2 Hz'
           '0.1 Hz')
       end
-      object sbObjNumAct: TScrollBar
-        Left = 270
-        Top = 380
-        Width = 191
-        Height = 16
-        Anchors = [akRight, akBottom]
-        PageSize = 0
-        TabOrder = 2
-        OnChange = sbObjNumActChange
-      end
       object txtObjStrAct: TEdit
-        Left = 260
+        Left = 265
         Top = 380
         Width = 186
         Height = 21
         Anchors = [akRight, akBottom]
-        TabOrder = 3
+        TabOrder = 2
       end
       object btnObjStrAct: TButton
-        Left = 450
+        Left = 455
         Top = 380
         Width = 46
         Height = 21
         Anchors = [akRight, akBottom]
         Caption = 'Set'
-        TabOrder = 4
+        TabOrder = 3
         OnClick = btnObjStrActClick
       end
       object btnObjRetry: TButton
-        Left = 450
+        Left = 455
         Top = 380
         Width = 46
         Height = 21
         Anchors = [akRight, akBottom]
         Caption = 'Retry'
         Enabled = False
-        TabOrder = 5
+        TabOrder = 4
         OnClick = btnObjRetryClick
       end
       object cbObjRefresh: TCheckBox
@@ -566,7 +539,7 @@ object Main: TMain
         Height = 16
         Anchors = [akRight, akBottom]
         Caption = 'Auto-refresh'
-        TabOrder = 6
+        TabOrder = 5
       end
     end
     object TabSheet1: TTabSheet

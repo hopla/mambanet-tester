@@ -78,9 +78,6 @@ __published:	// IDE-managed Components
   TComboBox *cbObjFreq;
   TLabel *lblNodeID;
   TLabel *Label23;
-  TScrollBar *sbObjNumAct;
-  TLabel *lblObjNumActMin;
-  TLabel *lblObjNumActMax;
   TEdit *txtObjStrAct;
   TButton *btnObjStrAct;
   TLabel *lblObjStatus;
@@ -98,7 +95,6 @@ __published:	// IDE-managed Components
           bool Selected);
   void __fastcall cbObjFreqChange(TObject *Sender);
   void __fastcall lvObjectsDeletion(TObject *Sender, TListItem *Item);
-  void __fastcall sbObjNumActChange(TObject *Sender);
   void __fastcall btnObjStrActClick(TObject *Sender);
   void __fastcall btnObjRetryClick(TObject *Sender);
   void __fastcall cseUniqueIDChange(TObject *Sender);
