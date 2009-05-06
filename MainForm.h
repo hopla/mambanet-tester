@@ -99,11 +99,16 @@ __published:	// IDE-managed Components
   void __fastcall btnObjRetryClick(TObject *Sender);
   void __fastcall cseUniqueIDChange(TObject *Sender);
   void __fastcall RefreshTimerTimer(TObject *Sender);
+  void __fastcall lvNodeListCompare(TObject *Sender, TListItem *Item1,
+          TListItem *Item2, int Data, int &Compare);
+  void __fastcall lvNodeListColumnClick(TObject *Sender,
+          TListColumn *Column);
 private:	// User declarations
 public:		// User declarations
   struct mbn_handler *mbn;
   struct mbn_if_ethernet *iflist;
   char validaddr;
+  unsigned char nodelistsort;
   unsigned long fromaddr, objnr, objcount, objget;
   __fastcall TMain(TComponent* Owner);
   __fastcall ~TMain();

@@ -749,3 +749,34 @@ void __fastcall TMain::RefreshTimerTimer(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TMain::lvNodeListCompare(TObject *Sender, TListItem *Item1,
+      TListItem *Item2, int Data, int &Compare)
+{
+    AnsiString a, b;
+    int column = nodelistsort & ~0x80;
+
+    if(nodelistsort & 0x80) { /* reversed */
+       a = column ? Item2->SubItems->Strings[column-1] : Item2->Caption;
+       b = column ? Item1->SubItems->Strings[column-1] : Item1->Caption;
+    } else {
+       a = column ? Item1->SubItems->Strings[column-1] : Item1->Caption;
+       b = column ? Item2->SubItems->Strings[column-1] : Item2->Caption;
+    }
+    Compare = a.AnsiCompare(b);
+}
+
+void __fastcall TMain::lvNodeListColumnClick(TObject *Sender,
+      TListColumn *Column)
+{
+    if((nodelistsort & ~0x80) == Column->Index) {
+        if(nodelistsort & 0x80)
+            nodelistsort -= 0x80;
+        else
+            nodelistsort |= 0x80;
+    } else if(nodelistsort & 0x80)
+        nodelistsort -= 0x80;
+    nodelistsort = Column->Index | (nodelistsort & 0x80);
+    lvNodeList->CustomSort(NULL, 0);
+}
+//---------------------------------------------------------------------------
+

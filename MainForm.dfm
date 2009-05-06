@@ -151,7 +151,6 @@ object Main: TMain
           item
             Caption = 'Name'
           end>
-        ColumnClick = False
         GridLines = True
         HideSelection = False
         ReadOnly = True
@@ -159,6 +158,8 @@ object Main: TMain
         SortType = stText
         TabOrder = 2
         ViewStyle = vsReport
+        OnColumnClick = lvNodeListColumnClick
+        OnCompare = lvNodeListCompare
         OnDblClick = lvNodeListDblClick
       end
     end
