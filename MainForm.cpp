@@ -57,6 +57,21 @@ void addlog(int sec, char *fmt, ...) {
     va_end(va);
 }
 
+unsigned long hex2int(const char *hex, int len) {
+  int i;
+  unsigned long r = 0;
+  for(i=0; i<len; i++) {
+    r <<= 4;
+    if(hex[i] >= '0' && hex[i] <= '9')
+      r += hex[i]-'0';
+    else if(hex[i] >= 'a' && hex[i] <= 'f')
+      r += hex[i]-'a'+10;
+    else if(hex[i] >= 'A' && hex[i] <= 'F')
+      r += hex[i]-'A'+10;
+  }
+  return r;
+}
+
 char data2strdat[256];
 char *data2str(unsigned char type, union mbn_data dat) {
     char *d = data2strdat;
@@ -681,6 +696,7 @@ void __fastcall TMain::btnObjStrActClick(TObject *Sender)
     union mbn_data dat;
     struct mbn_object *nfo;
     unsigned char *str[100];
+    char *tmp;
 
     lck->Enter();
     if(txtObjStrAct->Visible == false) {
@@ -697,8 +713,14 @@ void __fastcall TMain::btnObjStrActClick(TObject *Sender)
     for(l=lvObjects->Selected; l!=NULL; l=lvObjects->GetNextItem(l, sdAll, sel)) {
         nfo = (struct mbn_object *)l->Data;
         switch(nfo->ActuatorType) {
-        case MBN_DATATYPE_UINT:                      /* needs double to parse (1<<31) */
-        case MBN_DATATYPE_STATE:  dat.UInt = (unsigned long) txtObjStrAct->Text.ToDouble(); break;
+        case MBN_DATATYPE_UINT:
+        case MBN_DATATYPE_STATE:
+            if(txtObjStrAct->Text.Pos("0x") == 1) {
+                tmp = txtObjStrAct->Text.c_str();
+                dat.UInt = hex2int(tmp+2, strlen(tmp)-2);
+            } else
+                dat.UInt = (unsigned long) txtObjStrAct->Text.ToDouble();
+            break;
         case MBN_DATATYPE_FLOAT:  dat.Float = (float) txtObjStrAct->Text.ToDouble(); break;
         case MBN_DATATYPE_SINT:   dat.SInt = txtObjStrAct->Text.ToInt(); break;
         case MBN_DATATYPE_OCTETS:    
