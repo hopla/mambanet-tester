@@ -696,12 +696,14 @@ void __fastcall TMain::lvObjectsDeletion(TObject *Sender, TListItem *Item)
 
 void __fastcall TMain::btnObjStrActClick(TObject *Sender)
 {
-    TItemStates sel = TItemStates() << isSelected; 
+    TItemStates sel = TItemStates() << isSelected;
     TListItem *l;
     union mbn_data dat;
     struct mbn_object *nfo;
     unsigned char *str[100];
+    unsigned char ObjectData[64];
     char *tmp;
+    char cnt;
 
     lck->Enter();
     if(txtObjStrAct->Visible == false) {
@@ -728,10 +730,57 @@ void __fastcall TMain::btnObjStrActClick(TObject *Sender)
             break;
         case MBN_DATATYPE_FLOAT:  dat.Float = (float) txtObjStrAct->Text.ToDouble(); break;
         case MBN_DATATYPE_SINT:   dat.SInt = txtObjStrAct->Text.ToInt(); break;
-        case MBN_DATATYPE_OCTETS:    
+        case MBN_DATATYPE_OCTETS:
             memset((void *)str, 0, 100);
             strncpy((char *)str, txtObjStrAct->Text.c_str(), 100);
             dat.Octets = (unsigned char *)str;
+
+            bool ArrayOfIntegersFound = false;
+            int cntSeperator=0;
+            for (cnt=0; cnt<strlen((char *)str); cnt++) {
+              if (((char *)str)[cnt] == '|') {
+                cntSeperator++;
+              }
+            }
+
+            if (cntSeperator == nfo->ActuatorSize-1) {  //Try to decode array of integers.
+              int FirstChar = 0;
+              int cntObjectData = 0;
+              int TextSize = strlen((char *)str);
+
+              for (cnt=0; cnt<TextSize; cnt++) {
+                if (((char *)str)[cnt] == '|') {
+                  ((char *)str)[cnt] = 0x00;
+
+                  try {
+                    AnsiString Value = &((char *)str)[FirstChar];
+                    int IntegerData = Value.ToInt();
+
+                    ObjectData[cntObjectData++] = IntegerData&0xFF;
+                    FirstChar = cnt+1;
+                  } catch (Exception &exception) {
+                  }
+                }
+
+                if (cnt==(TextSize-1)) {  //Last value
+                  AnsiString Value = &((char *)str)[FirstChar];
+                  int IntegerData = Value.ToInt();
+
+                  ObjectData[cntObjectData++] = IntegerData&0xFF;
+                }
+              }
+
+              if (cntObjectData == nfo->ActuatorSize)
+              {
+                ArrayOfIntegersFound = true;
+              }
+            }
+
+            if (ArrayOfIntegersFound)
+            {
+              dat.Octets = (unsigned char *)ObjectData;
+            }
+
             break;
         }
         addlog(LF_APP, "Setting actuator data of %08lX object #%d to %s", fromaddr, nfo->timeout, data2str(nfo->ActuatorType, dat));
