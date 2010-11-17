@@ -635,6 +635,15 @@ object Main: TMain
       end>
     SimplePanel = False
   end
+  object AboutButton: TButton
+    Left = 416
+    Top = 11
+    Width = 97
+    Height = 21
+    Caption = 'About mbnlib.dll'
+    TabOrder = 3
+    OnClick = AboutButtonClick
+  end
   object RefreshTimer: TTimer
     OnTimer = RefreshTimerTimer
     Left = 495

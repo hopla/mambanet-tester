@@ -468,12 +468,16 @@ void __fastcall TMain::btnOpenClick(TObject *Sender) {
     mbnSetObjectErrorCallback(mbn, mObjectError);
     mbnSetObjectFrequencyResponseCallback(mbn, mObjectFrequencyResponse);
     mbnSetSensorDataChangedCallback(mbn, mSensorDataChanged);
-    addlog(LF_APP, "Created MambaNet node");
+    addlog(LF_APP, "Created MambaNet node, starting interface");
+
+    mbnStartInterface(itf, error);
 
     lstInterfaces->Enabled = false;
     cseUniqueID->Enabled = false;
     btnOpen->Enabled = false;
     btnClose->Enabled = true;
+
+    mbnSendPingRequest(mbn, MBN_BROADCAST_ADDRESS);
 }
 //---------------------------------------------------------------------------
 
@@ -767,8 +771,18 @@ void __fastcall TMain::cseUniqueIDChange(TObject *Sender)
 
 void __fastcall TMain::RefreshTimerTimer(TObject *Sender)
 {
+    char err[MBN_ERRSIZE];
+
     if(mbn && cbObjRefresh->Checked && lvObjects->SelCount >= 0 && pcTabs->ActivePageIndex == 1)
         lvObjectsSelectItem(Sender, lvObjects->Selected, true);
+
+    if (mbn != NULL)
+    {
+//      if (mbnEthernetMIILinkStatus(mbn->itf, err))
+//        StatusBar->Panels->Items[0]->Text = "Link up";
+//      else
+//        StatusBar->Panels->Items[0]->Text = "Link down";
+    }
 }
 //---------------------------------------------------------------------------
 
@@ -800,6 +814,133 @@ void __fastcall TMain::lvNodeListColumnClick(TObject *Sender,
         nodelistsort -= 0x80;
     nodelistsort = Column->Index | (nodelistsort & 0x80);
     lvNodeList->CustomSort(NULL, 0);
+}
+//---------------------------------------------------------------------------
+
+//make a 32 float representation.
+//8 bit  = seee mmmm
+//16 bit = seee eemm mmmm mmmm
+//32 bit = seee eeee emmm mmmm mmm mmmmm mmmm mmmm
+unsigned char Float2VariableFloat(float InputFloat, unsigned char VariableFloatBufferSize, unsigned char *FloatBuffer)
+{
+   unsigned long TemporyCastedFloat;
+   int exponent;
+   unsigned long mantessa;
+   char signbit;
+   unsigned char ReturnStatus;
+
+   ReturnStatus = 1;
+
+   TemporyCastedFloat = *((unsigned long *)&InputFloat);
+
+   mantessa = TemporyCastedFloat&0x007FFFFF;
+
+   exponent = (TemporyCastedFloat>>23)&0xFF;
+   exponent -= 127;
+
+   signbit = (TemporyCastedFloat>>(23+8))&0x01;
+
+   if (TemporyCastedFloat == 0x00000000)
+   {
+      unsigned char cntSize;
+
+      for (cntSize=0; cntSize<VariableFloatBufferSize; cntSize++)
+      {
+         FloatBuffer[cntSize] = 0x00;
+      }
+      ReturnStatus = 0;
+   }
+   else
+   {
+      switch (VariableFloatBufferSize)
+      {
+         case 1:
+         {
+            exponent += 3;
+            if (exponent<7)
+            {
+               if (exponent<0)
+               {
+                  exponent = 0;
+               }
+               FloatBuffer[0] = signbit;
+               FloatBuffer[0] <<= 3;
+               FloatBuffer[0] |= (exponent&0x7);
+               FloatBuffer[0] <<= 4;
+               FloatBuffer[0] |= (mantessa>>19)&0x0F;
+
+               ReturnStatus = 0;
+            }
+            else if (exponent > 6)
+            {  //+/-INF (or NaN)
+               exponent = 7;
+               mantessa = 0;
+
+               FloatBuffer[0] = signbit;
+               FloatBuffer[0] <<= 3;
+               FloatBuffer[0] |= (exponent&0x7);
+               FloatBuffer[0] <<= 4;
+               FloatBuffer[0] |= (mantessa>>19)&0x0F;
+
+               ReturnStatus = 0;
+            }
+         }
+         break;
+         case 2:
+         {
+            exponent += 15;
+            if (exponent<31)
+            {
+               if (exponent<0)
+               {
+                  exponent = 0;
+               }
+               FloatBuffer[0] = signbit;
+               FloatBuffer[0] <<= 5;
+               FloatBuffer[0] |= (exponent&0x1F);
+               FloatBuffer[0] <<= 2;
+               FloatBuffer[0] |= (mantessa>>21)&0x03;
+               FloatBuffer[1]  = (mantessa>>13)&0xFF;
+
+               ReturnStatus = 0;
+            }
+            else if (exponent > 30)
+            {  //+/-INF (or NaN)
+               exponent = 31;
+               mantessa = 0;
+
+               FloatBuffer[0] = signbit;
+               FloatBuffer[0] <<= 3;
+               FloatBuffer[0] |= (exponent&0x1F);
+               FloatBuffer[0] <<= 4;
+               FloatBuffer[0] |= (mantessa>>19)&0x0F;
+
+               ReturnStatus = 0;
+            }
+         }
+         break;
+         case 4:
+         {
+            FloatBuffer[0] = (TemporyCastedFloat>>24)&0xFF;
+            FloatBuffer[1] = (TemporyCastedFloat>>16)&0xFF;
+            FloatBuffer[2] = (TemporyCastedFloat>> 8)&0xFF;
+            FloatBuffer[3] = (TemporyCastedFloat    )&0xFF;
+
+            ReturnStatus = 0;
+         }
+         break;
+      }
+   }
+
+   return ReturnStatus;
+}
+
+void __fastcall TMain::AboutButtonClick(TObject *Sender)
+{
+//  unsigned char Buffer[2];
+//  Float2VariableFloat(-20, 2, Buffer);
+
+  ShowMessage(mbnVersion());
 }
 //---------------------------------------------------------------------------
 

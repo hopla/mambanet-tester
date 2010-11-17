@@ -85,6 +85,7 @@ __published:	// IDE-managed Components
   TButton *btnObjRetry;
   TCheckBox *cbObjRefresh;
   TTimer *RefreshTimer;
+  TButton *AboutButton;
   void __fastcall FormCreate(TObject *Sender);
   void __fastcall btnOpenClick(TObject *Sender);
   void __fastcall btnCloseClick(TObject *Sender);
@@ -104,6 +105,7 @@ __published:	// IDE-managed Components
           TListItem *Item2, int Data, int &Compare);
   void __fastcall lvNodeListColumnClick(TObject *Sender,
           TListColumn *Column);
+  void __fastcall AboutButtonClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
   struct mbn_handler *mbn;
