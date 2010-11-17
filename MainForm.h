@@ -12,6 +12,7 @@
 #include <Syncobjs.hpp>
 #include <ExtCtrls.hpp>
 #include <Grids.hpp>
+#include "cspin.h"
 //---------------------------------------------------------------------------
 class TMain : public TForm
 {

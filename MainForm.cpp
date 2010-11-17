@@ -13,6 +13,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 //#pragma link "CSPIN"
+#pragma link "cspin"
 #pragma resource "*.dfm"
 
 #define LF_APP 1
@@ -109,7 +110,7 @@ char *type2str(unsigned char type) {
     return "Unknown";
 }
 
-void mError(struct mbn_handler *mbn, int code, char *msg) {  
+void mError(struct mbn_handler *mbn, int code, char *msg) {
     addlog(LF_CB, "Error(%d): \"%s\")", code, msg);
 }
 
@@ -144,9 +145,9 @@ void mAddressTableChange(struct mbn_handler *mbn, struct mbn_address_node *o, st
         it->SubItems->Add(nm);
         sprintf(nm, "%08lX", cur->EngineAddr);
         it->SubItems->Add(nm);
-        sprintf(nm, "%02X", cur->Services);   
+        sprintf(nm, "%02X", cur->Services);
         it->SubItems->Add(nm);
-        it->SubItems->Add("-");      
+        it->SubItems->Add("-");
         it->SubItems->Add("-");
         Main->lvNodeList->Items->EndUpdate();
         if(Main->cbListFetch->Checked) {
@@ -163,14 +164,14 @@ void mAddressTableChange(struct mbn_handler *mbn, struct mbn_address_node *o, st
 }
 
 int mActuatorDataResponse(struct mbn_handler *mbn, struct mbn_message *msg, unsigned short object, unsigned char type, union mbn_data dat) {
-    int r = 0;  
+    int r = 0;
     TListItem *it;
     bool t;
 
     addlog(LF_CB, "Actuator Data Response from %08lX object %d (type %d), data %s",
         msg->AddressFrom, object, type, data2str(type, dat));
 
-    if(object == MBN_NODEOBJ_NAME) {  
+    if(object == MBN_NODEOBJ_NAME) {
         lck->Enter();
         it = Main->lvNodeList->FindData(0, (void *)msg->AddressFrom, true, false);
         if(it != NULL)
@@ -214,7 +215,7 @@ int mSensorDataResponse(struct mbn_handler *mbn, struct mbn_message *msg, unsign
         if(it != NULL)
             it->SubItems->Strings[3] = tmp;
         lck->Leave();
-    }               
+    }
 
     if(msg->AddressFrom != Main->fromaddr)
         return 1;
@@ -263,7 +264,7 @@ int mSensorDataResponse(struct mbn_handler *mbn, struct mbn_message *msg, unsign
             Main->lblObjStatus->Caption = tmp;
             Main->btnObjRetry->Enabled = true;
             for(i=0; i<dat.UInt; i++)
-                mbnGetObjectInformation(mbn, Main->fromaddr, 1024+i, 0);
+                mbnGetObjectInformation(mbn, Main->fromaddr, 1024+i, 1);
         }
         break;
     default:
@@ -281,7 +282,7 @@ void mAcknowledgeTimeout(struct mbn_handler *mbn, struct mbn_message *a) {
 }
 
 int mObjectInformationResponse(struct mbn_handler *mbn, struct mbn_message *msg, unsigned short obj, struct mbn_object *nfo) {
-    char tmp[30]; 
+    char tmp[30];
     TListItem *it;
     struct mbn_object *o;
     int i;
@@ -321,7 +322,7 @@ int mObjectInformationResponse(struct mbn_handler *mbn, struct mbn_message *msg,
             Main->btnObjRetry->Enabled = false;
     }
     sprintf(tmp, "%6d", obj);
-    it->Caption = tmp;       
+    it->Caption = tmp;
     sprintf(tmp, "%02X", nfo->Services);
     it->SubItems->Add(tmp);
     it->SubItems->Add((char *)nfo->Description);
@@ -348,7 +349,7 @@ int mObjectInformationResponse(struct mbn_handler *mbn, struct mbn_message *msg,
       it->SubItems->Add(tmp);
     } else {
       it->SubItems->Add("-");
-      it->SubItems->Add("");      
+      it->SubItems->Add("");
     }
 
     Main->lvObjects->Items->EndUpdate();
@@ -418,13 +419,13 @@ void __fastcall TMain::FormCreate(TObject *Sender)
       cseUniqueID->Value = reg->ReadInteger("UniqueID");
     delete reg;
 
-    lvObjects->Columns->Items[0]->Width = 40;   
+    lvObjects->Columns->Items[0]->Width = 40;
     lvObjects->Columns->Items[1]->Width = 25;
     lvObjects->Columns->Items[2]->Width = 130;
     lvObjects->Columns->Items[3]->Width = 60;
     lvObjects->Columns->Items[4]->Width = 65;
     lvObjects->Columns->Items[5]->Width = 60;
-    lvObjects->Columns->Items[6]->Width = 90;  
+    lvObjects->Columns->Items[6]->Width = 90;
     lvObjects->Selected = NULL;
 
     lvNodeList->Columns->Items[0]->Width = 60;
@@ -432,9 +433,9 @@ void __fastcall TMain::FormCreate(TObject *Sender)
     lvNodeList->Columns->Items[2]->Width = 60;
     lvNodeList->Columns->Items[3]->Width = 25;
     lvNodeList->Columns->Items[4]->Width = 95;
-    lvNodeList->Columns->Items[5]->Width = 130;   
+    lvNodeList->Columns->Items[5]->Width = 130;
     lvNodeList->Selected = NULL;
-      
+
     cbObjFreq->ItemIndex = -1;
     btnObjStrAct->Visible = false;
     txtObjStrAct->Visible = false;
@@ -486,7 +487,7 @@ void __fastcall TMain::btnCloseClick(TObject *Sender) {
     if(mbn)
         mbnFree(mbn);
     mbn = NULL;
-    validaddr = 0;                          
+    validaddr = 0;
     lck->Leave();
     addlog(LF_APP, "Closed MambaNet node");
 }
@@ -497,7 +498,7 @@ void __fastcall TMain::btnCloseClick(TObject *Sender) {
 void __fastcall TMain::mbnPingAllClick(TObject *Sender) {
     if(!mbn)
         return addlog(LF_APP, "Not connected!");
-    mbnSendPingRequest(mbn, MBN_BROADCAST_ADDRESS);  
+    mbnSendPingRequest(mbn, MBN_BROADCAST_ADDRESS);
 }
 //---------------------------------------------------------------------------
 
@@ -555,7 +556,7 @@ void __fastcall TMain::lvNodeListDblClick(TObject *Sender)
     fromaddr = (unsigned long)lvNodeList->Selected->Data;
     lblNodeName->Caption = "-";
     lblNodeDesc->Caption = "-";
-    lblNodeAddr->Caption = lvNodeList->Selected->Caption;               
+    lblNodeAddr->Caption = lvNodeList->Selected->Caption;
     lblNodeID->Caption   = lvNodeList->Selected->SubItems->Strings[0];
     lblNodeHWMa->Caption = "-";
     lblNodeHWMi->Caption = "-";
@@ -574,11 +575,11 @@ void __fastcall TMain::lvNodeListDblClick(TObject *Sender)
     lvObjects->Items->EndUpdate();
     lblObjStatus->Caption = "0/0";
     btnObjRetry->Enabled = false;
-    objnr = objcount = objget = 0; 
+    objnr = objcount = objget = 0;
     lck->Leave();
-    
-    ack = 0;
-    mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_DESCRIPTION, ack); 
+
+    ack = 1;
+    mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_DESCRIPTION, ack);
     mbnGetActuatorData(mbn, fromaddr, MBN_NODEOBJ_NAME, ack);
     mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_HWMAJOR, ack);
     mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_HWMINOR, ack);
@@ -589,7 +590,7 @@ void __fastcall TMain::lvNodeListDblClick(TObject *Sender)
     mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_PROTOMAJOR, ack);
     mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_PROTOMINOR, ack);
     mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_HWPARENT, ack);
-    mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_SERVICEREQUEST, ack); 
+    mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_SERVICEREQUEST, ack);
     mbnGetSensorData(mbn, fromaddr, MBN_NODEOBJ_NUMBEROFOBJECTS, ack);
 }
 //---------------------------------------------------------------------------
@@ -603,11 +604,11 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
     double min, max;
     char tmp[50];
     int same = 1;
-    
+
     lck->Enter();
     lblObjSensor->Caption = "-";
     lblObjActuator->Caption = "-";
-    cbObjFreq->ItemIndex = 0; 
+    cbObjFreq->ItemIndex = 0;
     btnObjStrAct->Visible = false;
     txtObjStrAct->Visible = false;
     btnObjRetry->Visible = true;
@@ -618,7 +619,7 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
         lck->Leave();
         return;
     }
-               
+
     nfo = (struct mbn_object *)Item->Data;
     if(nfo == NULL) {
         lck->Leave();
@@ -661,7 +662,7 @@ void __fastcall TMain::lvObjectsSelectItem(TObject *Sender,
 
 void __fastcall TMain::cbObjFreqChange(TObject *Sender)
 {
-    TListItem *l;  
+    TListItem *l;
     struct mbn_object *nfo;
     TItemStates sel = TItemStates() << isSelected;
 

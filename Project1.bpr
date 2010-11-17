@@ -3,14 +3,14 @@
 <PROJECT>
   <MACROS>
     <VERSION value="BCB.05.03"/>
-    <PROJECT value="&quot;C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester\Project1.exe&quot;"/>
+    <PROJECT value="&quot;C:\Program Files\Borland\CBuilder5\Projects\mambanet-tester\Project1.exe&quot;"/>
     <OBJFILES value="Project1.obj MainForm.obj"/>
     <RESFILES value="Project1.res"/>
     <DEFFILE value=""/>
     <RESDEPEN value="$(RESFILES) MainForm.dfm"/>
     <LIBFILES value="mbn.lib"/>
-    <LIBRARIES value="VCLX50.lib bcbsmp50.lib SlySound.lib HNPsSDKC5.lib dnr.lib Vcl50.lib"/>
-    <SPARELIBS value="Vcl50.lib dnr.lib HNPsSDKC5.lib SlySound.lib bcbsmp50.lib VCLX50.lib"/>
+    <LIBRARIES value="VCLX50.lib bcbsmp50.lib HNPsSDKC5.lib dnr.lib Vcl50.lib"/>
+    <SPARELIBS value="Vcl50.lib dnr.lib HNPsSDKC5.lib bcbsmp50.lib VCLX50.lib"/>
     <PACKAGES value="Vcl50.bpi Vclx50.bpi bcbsmp50.bpi Qrpt50.bpi Vcldb50.bpi Vclbde50.bpi 
       ibsmp50.bpi vcldbx50.bpi TeeUI50.bpi TeeDB50.bpi Tee50.bpi TeeQR50.bpi 
       VCLIB50.bpi bcbie50.bpi vclie50.bpi Inetdb50.bpi Inet50.bpi NMFast50.bpi 
@@ -22,7 +22,7 @@
     <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="tlink32"/>
-    <USERDEFINES value=""/>
+    <USERDEFINES value="_DEBUG"/>
     <SYSDEFINES value="NO_STRICT"/>
     <MAINSOURCE value="Project1.cpp"/>
     <INCLUDEPATH value="..\..;C:\PSSDK_VCL\BCB5\;&quot;..\..\DNR VCL Components&quot;;C:\Abakus\CB5\;$(BCB)\include;$(BCB)\include\vcl;&quot;..\..\DNR VCL Components\SerialPortEnviroment&quot;"/>
@@ -30,11 +30,12 @@
     <WARNINGS value="-w-par"/>
   </MACROS>
   <OPTIONS>
-    <CFLAG1 value="-O2 -H=$(BCB)\lib\vcl50.csm -Hc -Q -Vx -Ve -X- -a8 -b- -k- -vi -c -tW -tWM"/>
-    <PFLAGS value="-$Y- -$L- -$D- -v -JPHNE -M"/>
+    <CFLAG1 value="-Od -H=$(BCB)\lib\vcl50.csm -Hc -Q -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- 
+      -c -tW -tWM"/>
+    <PFLAGS value="-$Y+ -$W -$O- -v -JPHNE -M"/>
     <RFLAGS value=""/>
-    <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn"/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x -Gn -v"/>
   </OPTIONS>
   <LINKER>
     <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
