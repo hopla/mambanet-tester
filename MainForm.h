@@ -19,12 +19,10 @@ class TMain : public TForm
 __published:	// IDE-managed Components
   TGroupBox *GroupBox1;
   TLabel *Label1;
-  TLabel *Label2;
   TButton *btnOpen;
   TLabel *Label3;
   TEdit *txtMyAddress;
   TButton *btnClose;
-  TComboBox *lstInterfaces;
   TCSpinEdit *cseUniqueID;
   TPageControl *pcTabs;
   TTabSheet *TabSheet1;
@@ -85,7 +83,17 @@ __published:	// IDE-managed Components
   TButton *btnObjRetry;
   TCheckBox *cbObjRefresh;
   TTimer *RefreshTimer;
+  TPageControl *ConnectionPageControl;
+  TTabSheet *EthernetPage;
+  TLabel *Label2;
+  TComboBox *lstInterfaces;
+  TTabSheet *UDPPage;
+  TTabSheet *TCPPage;
   TButton *AboutButton;
+  TEdit *UDPEdit;
+  TLabel *Label22;
+  TLabel *Label24;
+  TEdit *TCPEdit;
   void __fastcall FormCreate(TObject *Sender);
   void __fastcall btnOpenClick(TObject *Sender);
   void __fastcall btnCloseClick(TObject *Sender);

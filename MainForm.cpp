@@ -449,10 +449,68 @@ void __fastcall TMain::btnOpenClick(TObject *Sender) {
     struct mbn_interface *itf;
     char error[MBN_ERRSIZE];
 
-    if(lstInterfaces->ItemIndex < 0)
-        return addlog(LF_APP, "No device selected!");
-    if((itf = mbnEthernetOpen((char *)lstInterfaces->Items->Objects[lstInterfaces->ItemIndex], error)) == NULL)
-        return addlog(LF_APP, "EthernetOpen failed: %s", error);
+    switch (ConnectionPageControl->ActivePageIndex)
+    {
+      case 0:
+      {
+        if(lstInterfaces->ItemIndex < 0)
+            return addlog(LF_APP, "No device selected!");
+        if((itf = mbnEthernetOpen((char *)lstInterfaces->Items->Objects[lstInterfaces->ItemIndex], error)) == NULL)
+            return addlog(LF_APP, "EthernetOpen failed: %s", error);
+      }
+      break;
+      case 1:
+      {
+        char Temp[256];
+        char *url_found;
+        char *port_found;
+        char url[256];
+        char port[16];
+
+        strcpy(Temp, UDPEdit->Text.c_str());
+        url_found = strtok(Temp, ":");
+        port_found = strtok(NULL, ":");
+
+        if (url_found == NULL)
+          return addlog(LF_APP, "No URL given!");
+
+        strcpy(url, url_found);
+        sprintf(port, "34848");
+        if (port_found != NULL)
+        {
+          strcpy(port, port_found);
+        }
+        if((itf = mbnUDPOpen(url, port, NULL, error)) == NULL)
+          return addlog(LF_APP, "EthernetOpen failed: %s", error);
+      }
+      break;
+      case 2:
+      {
+        char Temp[256];
+        char *url_found;
+        char *port_found;
+        char url[256];
+        char port[16];
+
+        strcpy(Temp, TCPEdit->Text.c_str());
+        url_found = strtok(Temp, ":");
+        port_found = strtok(NULL, ":");
+
+        if (url_found == NULL)
+          return addlog(LF_APP, "No URL given!");
+
+        strcpy(url, url_found);
+        sprintf(port, "34848");
+        if (port_found != NULL)
+        {
+          strcpy(port, port_found);
+        }
+
+        if((itf = mbnTCPOpen(url, port, NULL, NULL, error)) == NULL)
+          return addlog(LF_APP, "EthernetOpen failed: %s", error);
+      }
+      break;
+    }
 
     thisnode.UniqueIDPerProduct = cseUniqueID->Value;
     if((mbn = mbnInit(&thisnode, NULL, itf, error)) == NULL)
@@ -473,6 +531,8 @@ void __fastcall TMain::btnOpenClick(TObject *Sender) {
     mbnStartInterface(itf, error);
 
     lstInterfaces->Enabled = false;
+    UDPEdit->Enabled = false;
+    TCPEdit->Enabled = false;
     cseUniqueID->Enabled = false;
     btnOpen->Enabled = false;
     btnClose->Enabled = true;
@@ -485,6 +545,8 @@ void __fastcall TMain::btnCloseClick(TObject *Sender) {
     lck->Enter();
     lvNodeList->Items->Clear();
     lstInterfaces->Enabled = true;
+    UDPEdit->Enabled = true;
+    TCPEdit->Enabled = true;
     cseUniqueID->Enabled = true;
     btnOpen->Enabled = true;
     btnClose->Enabled = false;

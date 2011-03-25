@@ -1,8 +1,8 @@
 object Main: TMain
-  Left = 333
-  Top = 256
-  Width = 532
-  Height = 553
+  Left = 474
+  Top = 35
+  Width = 544
+  Height = 666
   Caption = 'MambaNet Tester'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,89 +17,157 @@ object Main: TMain
   object GroupBox1: TGroupBox
     Left = 5
     Top = 5
-    Width = 406
-    Height = 66
+    Width = 523
+    Height = 116
+    Anchors = [akLeft, akTop, akRight]
     Caption = 'Connection'
     TabOrder = 0
     object Label1: TLabel
-      Left = 185
-      Top = 15
+      Left = 360
+      Top = 39
       Width = 45
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'UniqueID'
     end
-    object Label2: TLabel
-      Left = 10
-      Top = 15
-      Width = 42
-      Height = 13
-      Caption = 'Interface'
-    end
     object Label3: TLabel
-      Left = 240
-      Top = 15
+      Left = 423
+      Top = 39
       Width = 77
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'MambaNet Addr'
     end
     object btnOpen: TButton
-      Left = 340
-      Top = 10
+      Left = 360
+      Top = 14
       Width = 51
       Height = 21
+      Anchors = [akTop, akRight]
       Caption = 'Open'
       TabOrder = 0
       OnClick = btnOpenClick
     end
     object txtMyAddress: TEdit
-      Left = 240
-      Top = 30
+      Left = 423
+      Top = 54
       Width = 86
       Height = 21
+      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 1
       Text = '0'
     end
     object btnClose: TButton
-      Left = 340
-      Top = 35
+      Left = 423
+      Top = 14
       Width = 51
       Height = 21
+      Anchors = [akTop, akRight]
       Caption = 'Close'
       Enabled = False
       TabOrder = 2
       OnClick = btnCloseClick
     end
-    object lstInterfaces: TComboBox
-      Left = 10
-      Top = 30
-      Width = 171
-      Height = 21
-      Style = csDropDownList
-      ItemHeight = 13
-      TabOrder = 3
-      Items.Strings = (
-        'test'
-        'test 1')
-    end
     object cseUniqueID: TCSpinEdit
-      Left = 185
-      Top = 30
+      Left = 360
+      Top = 54
       Width = 51
       Height = 22
       TabStop = True
+      Anchors = [akTop, akRight]
       MaxValue = 65535
       ParentColor = False
-      TabOrder = 4
+      TabOrder = 3
       Value = 1
       OnChange = cseUniqueIDChange
+    end
+    object ConnectionPageControl: TPageControl
+      Left = 16
+      Top = 16
+      Width = 323
+      Height = 81
+      ActivePage = EthernetPage
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 4
+      object EthernetPage: TTabSheet
+        Caption = 'Ethernet'
+        object Label2: TLabel
+          Left = 10
+          Top = 7
+          Width = 42
+          Height = 13
+          Caption = 'Interface'
+        end
+        object lstInterfaces: TComboBox
+          Left = 10
+          Top = 22
+          Width = 300
+          Height = 21
+          Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
+          ItemHeight = 13
+          TabOrder = 0
+          Items.Strings = (
+            'test'
+            'test 1')
+        end
+      end
+      object UDPPage: TTabSheet
+        Caption = 'UDP/IP'
+        ImageIndex = 1
+        object Label22: TLabel
+          Left = 10
+          Top = 7
+          Width = 56
+          Height = 13
+          Caption = '<url>:<port>'
+        end
+        object UDPEdit: TEdit
+          Left = 10
+          Top = 22
+          Width = 300
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+        end
+      end
+      object TCPPage: TTabSheet
+        Caption = 'TCP/IP'
+        ImageIndex = 2
+        object Label24: TLabel
+          Left = 10
+          Top = 7
+          Width = 56
+          Height = 13
+          Caption = '<url>:<port>'
+        end
+        object TCPEdit: TEdit
+          Left = 10
+          Top = 22
+          Width = 300
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+        end
+      end
+    end
+    object AboutButton: TButton
+      Left = 412
+      Top = 86
+      Width = 97
+      Height = 21
+      Anchors = [akTop, akRight]
+      Caption = 'About mbnlib.dll'
+      TabOrder = 5
+      OnClick = AboutButtonClick
     end
   end
   object pcTabs: TPageControl
     Left = 5
-    Top = 75
-    Width = 511
-    Height = 431
+    Top = 136
+    Width = 523
+    Height = 483
     ActivePage = TabSheet3
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
@@ -108,7 +176,7 @@ object Main: TMain
       ImageIndex = 2
       object cbListFetch: TCheckBox
         Left = 5
-        Top = 385
+        Top = 437
         Width = 161
         Height = 16
         Anchors = [akLeft, akBottom]
@@ -117,8 +185,8 @@ object Main: TMain
         OnClick = cbListFetchClick
       end
       object mbnPingAll: TButton
-        Left = 427
-        Top = 382
+        Left = 439
+        Top = 434
         Width = 71
         Height = 21
         Anchors = [akRight, akBottom]
@@ -129,8 +197,8 @@ object Main: TMain
       object lvNodeList: TListView
         Left = 5
         Top = 5
-        Width = 491
-        Height = 376
+        Width = 503
+        Height = 428
         Anchors = [akLeft, akTop, akRight, akBottom]
         Columns = <
           item
@@ -382,15 +450,15 @@ object Main: TMain
       end
       object Label18: TLabel
         Left = 10
-        Top = 360
+        Top = 412
         Width = 36
         Height = 13
         Anchors = [akLeft, akBottom]
         Caption = 'Sensor:'
       end
       object Label20: TLabel
-        Left = 240
-        Top = 360
+        Left = 252
+        Top = 412
         Width = 43
         Height = 13
         Anchors = [akRight, akBottom]
@@ -398,15 +466,15 @@ object Main: TMain
       end
       object lblObjSensor: TLabel
         Left = 70
-        Top = 360
+        Top = 412
         Width = 3
         Height = 13
         Anchors = [akLeft, akBottom]
         Caption = '-'
       end
       object lblObjActuator: TLabel
-        Left = 290
-        Top = 360
+        Left = 302
+        Top = 412
         Width = 3
         Height = 13
         Anchors = [akRight, akBottom]
@@ -414,7 +482,7 @@ object Main: TMain
       end
       object Label21: TLabel
         Left = 10
-        Top = 385
+        Top = 437
         Width = 53
         Height = 13
         Anchors = [akLeft, akBottom]
@@ -435,8 +503,8 @@ object Main: TMain
         Caption = 'UniqueID:'
       end
       object lblObjStatus: TLabel
-        Left = 425
-        Top = 385
+        Left = 437
+        Top = 437
         Width = 17
         Height = 13
         Alignment = taRightJustify
@@ -446,8 +514,8 @@ object Main: TMain
       object lvObjects: TListView
         Left = 5
         Top = 60
-        Width = 491
-        Height = 296
+        Width = 503
+        Height = 348
         Anchors = [akLeft, akTop, akRight, akBottom]
         Columns = <
           item
@@ -485,7 +553,7 @@ object Main: TMain
       end
       object cbObjFreq: TComboBox
         Left = 70
-        Top = 380
+        Top = 432
         Width = 91
         Height = 21
         Style = csDropDownList
@@ -505,16 +573,16 @@ object Main: TMain
           '0.1 Hz')
       end
       object txtObjStrAct: TEdit
-        Left = 265
-        Top = 380
+        Left = 277
+        Top = 432
         Width = 186
         Height = 21
         Anchors = [akRight, akBottom]
         TabOrder = 2
       end
       object btnObjStrAct: TButton
-        Left = 455
-        Top = 380
+        Left = 467
+        Top = 432
         Width = 46
         Height = 21
         Anchors = [akRight, akBottom]
@@ -523,8 +591,8 @@ object Main: TMain
         OnClick = btnObjStrActClick
       end
       object btnObjRetry: TButton
-        Left = 455
-        Top = 380
+        Left = 467
+        Top = 432
         Width = 46
         Height = 21
         Anchors = [akRight, akBottom]
@@ -534,8 +602,8 @@ object Main: TMain
         OnClick = btnObjRetryClick
       end
       object cbObjRefresh: TCheckBox
-        Left = 420
-        Top = 360
+        Left = 432
+        Top = 412
         Width = 81
         Height = 16
         Anchors = [akRight, akBottom]
@@ -626,23 +694,14 @@ object Main: TMain
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 508
-    Width = 524
+    Top = 614
+    Width = 536
     Height = 18
     Panels = <
       item
         Width = 100
       end>
     SimplePanel = False
-  end
-  object AboutButton: TButton
-    Left = 416
-    Top = 11
-    Width = 97
-    Height = 21
-    Caption = 'About mbnlib.dll'
-    TabOrder = 3
-    OnClick = AboutButtonClick
   end
   object RefreshTimer: TTimer
     OnTimer = RefreshTimerTimer

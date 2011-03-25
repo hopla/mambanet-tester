@@ -105,11 +105,12 @@ Count=1
 Item0=_DEBUG
 
 [HistoryLists\hlFinalOutputDir]
-Count=4
-Item0=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester\
-Item1=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester
-Item2=C:\Program Files\Borland\CBuilder5\Projects\release\
-Item3=C:\Program Files\Borland\CBuilder5\Projects\release
+Count=5
+Item0=C:\Program Files\Borland\CBuilder5\Projects\mambanet-tester\
+Item1=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester\
+Item2=C:\Program Files\Borland\CBuilder5\Projects\Mambanet Tester
+Item3=C:\Program Files\Borland\CBuilder5\Projects\release\
+Item4=C:\Program Files\Borland\CBuilder5\Projects\release
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl
