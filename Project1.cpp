@@ -12,6 +12,7 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
   try
   {
      Application->Initialize();
+     Application->Title = "MambaNet Tester";
      Application->CreateForm(__classid(TMain), &Main);
      Application->Run();
   }
