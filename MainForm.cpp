@@ -1048,9 +1048,6 @@ unsigned char Float2VariableFloat(float InputFloat, unsigned char VariableFloatB
 
 void __fastcall TMain::AboutButtonClick(TObject *Sender)
 {
-//  unsigned char Buffer[2];
-//  Float2VariableFloat(-20, 2, Buffer);
-
   ShowMessage(mbnVersion());
 }
 //---------------------------------------------------------------------------
